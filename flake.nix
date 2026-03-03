@@ -12,7 +12,7 @@
     home-manager,
     ...
   }: {
-    nixosModules.ndlocr-lite = import ./modules/nixos.nix;
-    homeManagerModules.ndlocr-lite = import ./modules/home-manager.nix;
+    nixosModules.ndlocrLite = import ./modules/nixos.nix;
+    homeManagerModules.ndlocrLite = import ./modules/home-manager.nix;
   };
 }
