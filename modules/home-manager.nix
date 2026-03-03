@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  ndlocr-lite = pkgs.python310Packages.buildPythonPackage rec {
+  ndlocrLite = pkgs.python310Packages.buildPythonPackage rec {
     pname = "ndlocr-lite";
     version = "unstable";
 
@@ -14,5 +14,5 @@
     doCheck = false;
   };
 in {
-  home.packages = [ndlocr-lite];
+  home.packages = [ndlocrLite];
 }
