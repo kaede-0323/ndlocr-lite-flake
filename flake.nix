@@ -10,11 +10,30 @@
     system = "x86_64-linux";
     pkgs = import nixpkgs {inherit system;};
 
-    src = pkgs.fetchFromGitHub {
+    origSrc = pkgs.fetchFromGitHub {
       owner = "ndl-lab";
       repo = "ndlocr-lite";
       rev = "master";
       hash = "sha256-7LgCxm+kx6+iVRLl7EIIaaWpSbodPzVgqMmrm2Kd8iI=";
+    };
+
+    patchedSrc = pkgs.stdenv.mkDerivation {
+      pname = "ndlocr-lite";
+      version = "patched";
+
+      src = origSrc;
+      patches = [
+        (pkgs.fetchurl
+          {
+            url = "https://raw.githubusercontent.com/kaede-0323/ndlocr-lite-stdout-patch/master/stdout_patch.diff";
+            sha256 = "03bj5fzhcl8pn2jjkw65av6nb4w7d9mkms5ki3xqpnng5shc7pfl";
+          })
+      ];
+
+      installPhase = ''
+        mkdir -p $out
+        cp -r * $out/
+      '';
     };
     python = pkgs.python312.withPackages (ps:
       with ps; [
@@ -38,7 +57,7 @@
       name = "ndlocr-lite-cli";
       runtimeInputs = [python];
       text = ''
-        exec python ${src}/src/ocr.py "$@"
+        exec python ${patchedSrc}/src/ocr.py "$@"
       '';
     };
   };
