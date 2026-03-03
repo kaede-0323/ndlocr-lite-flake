@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  ndlocrLite = pkgs.python310Packages.buildPythonPackage rec {
+  ndlocrLite = pkgs.python314Packages.buildPythonPackage rec {
     pname = "ndlocrLite";
     version = "unstable";
 
