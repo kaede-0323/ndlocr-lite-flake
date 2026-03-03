@@ -17,17 +17,21 @@
       hash = "sha256-7LgCxm+kx6+iVRLl7EIIaaWpSbodPzVgqMmrm2Kd8iI=";
     };
 
+    patchFileSrc = pkgs.fetchFromGitHub {
+      owner = "kaede-0323";
+      repo = "ndlocr-lite-stdout-patch";
+      rev = "master";
+      hash = "sha256-veaOVlOgPWWih7APiIJY5aeMTMqKvW8Pz3pZpWxjrJ8=";
+    };
+
     patchedSrc = pkgs.stdenv.mkDerivation {
       pname = "ndlocr-lite";
-      version = "patched";
+      version = "patched-0.0.2";
 
       src = origSrc;
       patches = [
-        (pkgs.fetchurl
-          {
-            url = "https://raw.githubusercontent.com/kaede-0323/ndlocr-lite-stdout-patch/master/stdout_patch.diff";
-            sha256 = "03bj5fzhcl8pn2jjkw65av6nb4w7d9mkms5ki3xqpnng5shc7pfl";
-          })
+        "${patchFileSrc}/stdout_patch.diff"
+        "${patchFileSrc}/stderr.diff"
       ];
 
       installPhase = ''
