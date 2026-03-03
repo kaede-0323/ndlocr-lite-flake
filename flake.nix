@@ -1,18 +1,18 @@
 {
-  description = "NDLOCR-lite NixOS/Home-Manager flake modules";
+  description = "NDLOCR-lite NixOS flake modules";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
+    pyproject-nix.url = "github:pyproject-nix/pyproject.nix";
+    ndlocr-src.url = "github:ndl-lab/ndlocr-lite";
+    ndlocr-src.flake = false;
   };
 
   outputs = {
     self,
     nixpkgs,
-    home-manager,
     ...
   }: {
     nixosModules.ndlocrLite = import ./modules/nixos.nix;
-    homeManagerModules.ndlocrLite = import ./modules/home-manager.nix;
   };
 }

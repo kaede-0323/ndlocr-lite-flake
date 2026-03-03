@@ -1,20 +1,16 @@
-{pkgs, ...}: let
-  ndlocrLite = pkgs.python314Packages.buildPythonPackage rec {
-    pname = "ndlocrLite";
-    version = "unstable";
+{
+  pkgs,
+  inputs,
+  ...
+}: let
+  python = pkgs.python3;
 
-    src = pkgs.fetchFromGitHub {
-      owner = "ndl-lab";
-      repo = "ndlocr-lite";
-      rev = "master";
-      sha256 = "sha256-1piclqni01x6m35yi49zbyyz3sjrb4clwxw1608g7xyiw6ansgf5";
-    };
+  project = inputs.pyproject-nix.lib.project.loadPyproject {
+    projectRoot = inputs.ndlocr-src;
+  };
 
-    # pyproject.toml を使う場合は、poetry や setuptools を使う
-    buildInputs = [pkgs.poetry pkgs.python310 pkgs.python310Packages.setuptools];
-
-    # 不要なテストをスキップする場合
-    doCheck = false;
+  ndlocrLite = inputs.pyproject-nix.lib.project.mkPythonPackage {
+    inherit pkgs python project;
   };
 in {
   environment.systemPackages = [ndlocrLite];
