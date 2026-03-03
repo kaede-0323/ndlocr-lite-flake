@@ -1,6 +1,6 @@
 {pkgs, ...}: let
   ndlocrLite = pkgs.python310Packages.buildPythonPackage rec {
-    pname = "ndlocr-lite";
+    pname = "ndlocrLite";
     version = "unstable";
 
     src = pkgs.fetchFromGitHub {
